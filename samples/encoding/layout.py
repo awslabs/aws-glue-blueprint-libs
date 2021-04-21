@@ -35,7 +35,10 @@ def generate_layout(user_params, system_params):
         print(ce)
         print(ce.response['ResponseMetadata'])
         print("Creating script bucket: ", the_script_bucket)
-        bucket = s3_client.create_bucket(Bucket=the_script_bucket, CreateBucketConfiguration=location)
+        if system_params['region'] == "us-east-1":
+            bucket = s3_client.create_bucket(Bucket=the_script_bucket)
+        else:
+            bucket = s3_client.create_bucket(Bucket=the_script_bucket, CreateBucketConfiguration=location)
 
     # Creating temp bucket
     the_temp_bucket = f"aws-glue-temporary-{system_params['accountId']}-{system_params['region']}"
@@ -48,7 +51,10 @@ def generate_layout(user_params, system_params):
         print(ce)
         print(ce.response['ResponseMetadata'])
         print("Creating temp bucket: ", the_temp_bucket)
-        bucket = s3_client.create_bucket(Bucket=the_temp_bucket, CreateBucketConfiguration=location)
+        if system_params['region'] == "us-east-1":
+            bucket = s3_client.create_bucket(Bucket=the_temp_bucket)
+        else:
+            bucket = s3_client.create_bucket(Bucket=the_temp_bucket, CreateBucketConfiguration=location)
 
     # Upload job script to script bucket
     the_script_key = f"{workflow_name}/{file_name}"
