@@ -15,6 +15,8 @@ This repository provides a Python library to build and test AWS Glue Custom Blue
 
 * Partitioning: This blueprint creates a partitioning job that places output files into partitions based on specific partition keys.
 
+* Importing an AWS Glue table into a Lake Formation governed table: This blueprint imports a Glue Catalog table into a Lake Formation governed table.
+
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
