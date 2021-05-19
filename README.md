@@ -17,6 +17,8 @@ This repository provides a Python library to build and test AWS Glue Custom Blue
 
 * Importing an AWS Glue table into a Lake Formation governed table: This blueprint imports a Glue Catalog table into a Lake Formation governed table.
 
+* Creating table definitions from Glue Custom Connection: This blueprint accesses data stores using Glue Custom Connectors, read the records, and populate the table definitions on Glue Data Catalog based on the record schema.
+
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
