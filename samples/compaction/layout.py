@@ -97,7 +97,7 @@ def generate_layout(user_params, system_params):
 
     # Creating manifest bucket
     if user_params['EnableManifest']:
-        the_manifest_bucket = f"aws-glue-blueprint-compaction-manifest-{system_params['accountId']}-{system_params['region']}"
+        the_manifest_bucket = f"aws-glue-compaction-manifest-{system_params['accountId']}-{system_params['region']}"
         the_manifest_prefix = f"{workflow_name}/"
         the_manifest_location = f"s3://{the_manifest_bucket}/{the_manifest_prefix}"
         try:
