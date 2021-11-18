@@ -30,8 +30,9 @@ standard_table_to_governed/
 * NumberOfWorkers: The number of G.1X workers in glue job.
 
 ## Prerequisite
+* Source table must be readable using Dynamic Frames, ie it must have a classification property in the table.
 * You need to have a Glue Catalog table referring to their s3 path.
-* You need to register your S3 path as a Lake Formation data lake location.
+* You need to register your Governed tables S3 path as a Lake Formation data lake location.
 * You need to configure Lake Formation permissions on your IAM role `GlueExecutionRole`.
   * Database permissions
     * `Create table`, `Describe` and `Alter` permission for the database specified in `DestinationDatabaseName`.
@@ -54,14 +55,14 @@ standard_table_to_governed/
 8. Select your `standard_table_to_governed-tutorial` blueprint, and choose **Create workflow** from the **Actions** menu.
 9. Specify parameters and choose **Submit**.
     1. WorkflowName: `standard_table_to_governed`
-    2. GlueExecutionRole: `GlueServiceRole`
+    2. GlueExecutionRole: `AWSGlueServiceRole`
     3. SourceDatabaseName: `blueprint_tutorial`
     4. SourceTableName: `conversion` (In this tutorial, the `conversion` table is used as a sample data. This table can be created by the tutorial written in the conversion blueprint.)
     5. DestinationDatabaseName: `blueprint_tutorial`
     6. DestinationTableName: `governed`
     7. OutputDataLocation: `s3://path/to/output/data/location/`
     8. NumberOfWorkers: `5` (Use default value)
-    9. IAM role: `GlueServiceRole`
+    9. IAM role: `AWSGlueServiceRole`
         
         Note: This role is used to create the entities in workflow.
 10. Wait for the blueprint run to be **SUCCEEDED**.
