@@ -88,7 +88,7 @@ except Exception as e:
     raise
 
 # Begin Lake Formation transaction
-tx_id = glue_context.start_transaction(read_only=True)
+tx_id = glue_context.start_transaction(read_only=False)
 
 # Write DynamicFrame into Lake Formation governed table using transaction
 sink = glue_context.getSink(
