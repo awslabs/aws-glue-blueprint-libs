@@ -64,8 +64,31 @@ partition_key_names = []
 for partition_key in partition_key_array:
     partition_key_names.append(partition_key['Name'])
 
+# Create the target table from the source table.
+table_to_create = {
+    'Name' : output_table,
+    'StorageDescriptor' : res['Table']['StorageDescriptor'],
+    'PartitionKeys': res['Table']['PartitionKeys'],
+    'TableType': 'GOVERNED'
+}
+
+table_to_create['StorageDescriptor']['Location'] = output_path
+table_to_create['StorageDescriptor']['Parameters']['lakeformation.aso.status'] = 'true'
+if 'Description' in res['Table']:
+    table_to_create['Description'] = res['Table']['Description']
+
+try:
+    glue.create_table(
+        DatabaseName=output_database,
+        TableInput=table_to_create
+    )
+except Exception as e:
+    print(f"Failed to create destination table. If {output_database}.{output_table} table exists, please remove it.")
+    print(e)
+    raise
+
 # Begin Lake Formation transaction
-tx_id = glue_context.begin_transaction(read_only=False)
+tx_id = glue_context.start_transaction(read_only=False)
 
 # Write DynamicFrame into Lake Formation governed table using transaction
 sink = glue_context.getSink(
@@ -85,7 +108,7 @@ try:
     sink.writeFrame(dyf)
     glue_context.commit_transaction(tx_id)
 except Exception:
-    glue_context.abort_transaction(tx_id)
+    glue_context.cancel_transaction(tx_id)
     raise
 
 job.commit()
