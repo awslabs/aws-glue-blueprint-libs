@@ -3736,6 +3736,12 @@
       "min":0
     },
     "BoxedBoolean":{"type":"boolean"},
+    "BoxedDoubleFraction":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0
+    },
     "BoxedLong":{
       "type":"long",
       "box":true
@@ -3847,7 +3853,8 @@
         },
         "WindowSize":{
           "shape":"PositiveInt",
-          "documentation":"<p>The amount of time to spend processing each micro batch.</p>"
+          "documentation":"<p>The amount of time to spend processing each micro batch.</p>",
+          "box":true
         },
         "DetectSchema":{
           "shape":"BoxedBoolean",
@@ -3887,7 +3894,8 @@
         },
         "WindowSize":{
           "shape":"PositiveInt",
-          "documentation":"<p>The amount of time to spend processing each micro batch.</p>"
+          "documentation":"<p>The amount of time to spend processing each micro batch.</p>",
+          "box":true
         },
         "DetectSchema":{
           "shape":"BoxedBoolean",
@@ -7032,7 +7040,8 @@
         },
         "WindowSize":{
           "shape":"PositiveInt",
-          "documentation":"<p>The amount of time to spend processing each micro batch.</p>"
+          "documentation":"<p>The amount of time to spend processing each micro batch.</p>",
+          "box":true
         },
         "DetectSchema":{
           "shape":"BoxedBoolean",
@@ -7056,7 +7065,8 @@
         },
         "WindowSize":{
           "shape":"PositiveInt",
-          "documentation":"<p>The amount of time to spend processing each micro batch.</p>"
+          "documentation":"<p>The amount of time to spend processing each micro batch.</p>",
+          "box":true
         },
         "DetectSchema":{
           "shape":"BoxedBoolean",
@@ -10087,8 +10097,8 @@
     "JobBookmarkKeysSortOrder":{
       "type":"string",
       "enum":[
-        "asc",
-        "desc"
+        "ASC",
+        "DESC"
       ]
     },
     "JobBookmarksEncryption":{
@@ -11677,14 +11687,20 @@
     },
     "PIIDetection":{
       "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "PiiType",
+        "EntityTypesToDetect"
+      ],
       "members":{
         "Name":{"shape":"NodeName"},
         "Inputs":{"shape":"OneInput"},
         "PiiType":{"shape":"PiiType"},
-        "EntityTypesToDetect":{"shape":"EnclosedInStringProperty"},
+        "EntityTypesToDetect":{"shape":"EnclosedInStringProperties"},
         "OutputColumnName":{"shape":"EnclosedInStringProperty"},
-        "SampleFraction":{"shape":"double"},
-        "ThresholdFraction":{"shape":"double"},
+        "SampleFraction":{"shape":"BoxedDoubleFraction"},
+        "ThresholdFraction":{"shape":"BoxedDoubleFraction"},
         "MaskValue":{"shape":"MaskValue"}
       }
     },
@@ -12315,7 +12331,8 @@
         "TmpDirIAMRole":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The IAM role with permissions.</p>"
-        }
+        },
+        "UpsertRedshiftOptions":{"shape":"UpsertRedshiftTargetOptions"}
       },
       "documentation":"<p>Specifies a target that uses Amazon Redshift.</p>"
     },
@@ -14862,10 +14879,6 @@
           "shape":"TwoInputs",
           "documentation":"<p>The node ID inputs to the transform.</p>"
         },
-        "Sources":{
-          "shape":"TwoInputs",
-          "documentation":"<p>A list of two or more data sources that have the same schema.</p>"
-        },
         "UnionType":{
           "shape":"UnionType",
           "documentation":"<p>Indicates the type of Union transform. </p> <p>Specify <code>ALL</code> to join all rows from data sources to the resulting DynamicFrame. The resulting union does not remove duplicate rows.</p> <p>Specify <code>DISTINCT</code> to remove duplicate rows in the resulting DynamicFrame.</p>"
@@ -15623,6 +15636,14 @@
       "documentation":"<p>Specifies an XML classifier to be updated.</p>"
     },
     "UpdatedTimestamp":{"type":"string"},
+    "UpsertRedshiftTargetOptions":{
+      "type":"structure",
+      "members":{
+        "TableLocation":{"shape":"EnclosedInStringProperty"},
+        "ConnectionName":{"shape":"EnclosedInStringProperty"},
+        "UpsertKeys":{"shape":"EnclosedInStringProperties"}
+      }
+    },
     "UriString":{"type":"string"},
     "UserDefinedFunction":{
       "type":"structure",
@@ -15954,8 +15975,7 @@
         }
       },
       "documentation":"<p>A classifier for <code>XML</code> content.</p>"
-    },
-    "double":{"type":"double"}
+    }
   },
   "documentation":"<fullname>Glue</fullname> <p>Defines the public endpoint for the Glue service.</p>"
 }
