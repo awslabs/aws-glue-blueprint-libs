@@ -73,7 +73,9 @@
         {"shape":"InvalidInputException"},
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
-        {"shape":"OperationTimeoutException"}
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ResourceNotReadyException"}
       ],
       "documentation":"<p>Deletes multiple tables at once.</p> <note> <p>After completing this operation, you no longer have access to the table versions and partitions that belong to the deleted table. Glue deletes these \"orphaned\" resources asynchronously in a timely manner, at the discretion of the service.</p> <p>To ensure the immediate deletion of all related resources, before calling <code>BatchDeleteTable</code>, use <code>DeleteTableVersion</code> or <code>BatchDeleteTableVersion</code>, and <code>DeletePartition</code> or <code>BatchDeletePartition</code>, to delete any resources that belong to the table.</p> </note>"
     },
@@ -166,7 +168,8 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"InvalidStateException"}
       ],
       "documentation":"<p>Retrieves partitions in a batch request.</p>"
     },
@@ -383,7 +386,8 @@
         {"shape":"OperationTimeoutException"},
         {"shape":"ResourceNumberLimitExceededException"},
         {"shape":"ConcurrentModificationException"}
-      ]
+      ],
+      "documentation":"<p>Creates a new job definition.</p>"
     },
     "CreateMLTransform":{
       "name":"CreateMLTransform",
@@ -525,7 +529,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"GlueEncryptionException"},
-        {"shape":"ConcurrentModificationException"}
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNotReadyException"}
       ],
       "documentation":"<p>Creates a new table definition in the Data Catalog.</p>"
     },
@@ -871,7 +876,8 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
-        {"shape":"ConcurrentModificationException"}
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNotReadyException"}
       ],
       "documentation":"<p>Removes a table definition from the Data Catalog.</p> <note> <p>After completing this operation, you no longer have access to the table versions and partitions that belong to the deleted table. Glue deletes these \"orphaned\" resources asynchronously in a timely manner, at the discretion of the service.</p> <p>To ensure the immediate deletion of all related resources, before calling <code>DeleteTable</code>, use <code>DeleteTableVersion</code> or <code>BatchDeleteTableVersion</code>, and <code>DeletePartition</code> or <code>BatchDeletePartition</code>, to delete any resources that belong to the table.</p> </note>"
     },
@@ -1241,7 +1247,8 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"}
-      ]
+      ],
+      "documentation":"<p>Retrieves an existing job definition.</p>"
     },
     "GetJobBookmark":{
       "name":"GetJobBookmark",
@@ -1435,7 +1442,9 @@
         {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"InvalidStateException"},
+        {"shape":"ResourceNotReadyException"}
       ],
       "documentation":"<p>Retrieves information about the partitions in a table.</p>"
     },
@@ -1611,7 +1620,8 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ResourceNotReadyException"}
       ],
       "documentation":"<p>Retrieves the <code>Table</code> definition in a Data Catalog for a specified table.</p>"
     },
@@ -1713,6 +1723,57 @@
         {"shape":"OperationTimeoutException"}
       ],
       "documentation":"<p>Gets all the triggers associated with a job.</p>"
+    },
+    "GetUnfilteredPartitionMetadata":{
+      "name":"GetUnfilteredPartitionMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetUnfilteredPartitionMetadataRequest"},
+      "output":{"shape":"GetUnfilteredPartitionMetadataResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"PermissionTypeMismatchException"}
+      ]
+    },
+    "GetUnfilteredPartitionsMetadata":{
+      "name":"GetUnfilteredPartitionsMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetUnfilteredPartitionsMetadataRequest"},
+      "output":{"shape":"GetUnfilteredPartitionsMetadataResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"PermissionTypeMismatchException"}
+      ]
+    },
+    "GetUnfilteredTableMetadata":{
+      "name":"GetUnfilteredTableMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetUnfilteredTableMetadataRequest"},
+      "output":{"shape":"GetUnfilteredTableMetadataResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"PermissionTypeMismatchException"}
+      ]
     },
     "GetUserDefinedFunction":{
       "name":"GetUserDefinedFunction",
@@ -2583,7 +2644,8 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"ConcurrentModificationException"}
-      ]
+      ],
+      "documentation":"<p>Updates an existing job definition.</p>"
     },
     "UpdateMLTransform":{
       "name":"UpdateMLTransform",
@@ -2668,7 +2730,8 @@
         {"shape":"OperationTimeoutException"},
         {"shape":"ConcurrentModificationException"},
         {"shape":"ResourceNumberLimitExceededException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ResourceNotReadyException"}
       ],
       "documentation":"<p>Updates a metadata table in the Data Catalog.</p>"
     },
@@ -2813,7 +2876,7 @@
       "members":{
         "Name":{"shape":"NodeName"},
         "Inputs":{"shape":"OneInput"},
-        "Groups":{"shape":"EnclosedInStringProperties"},
+        "Groups":{"shape":"GlueStudioPathList"},
         "Aggs":{"shape":"AggregateOperations"}
       }
     },
@@ -2824,7 +2887,7 @@
         "AggFunc"
       ],
       "members":{
-        "Column":{"shape":"EnclosedInStringProperty"},
+        "Column":{"shape":"EnclosedInStringProperties"},
         "AggFunc":{"shape":"AggFunction"}
       }
     },
@@ -2894,6 +2957,7 @@
       "required":[
         "Name",
         "ConnectionName",
+        "ConnectorName",
         "ConnectionType",
         "ConnectionTable",
         "SchemaName"
@@ -2912,7 +2976,7 @@
           "documentation":"<p>The name of a connector that assists with accessing the data store in Glue Studio.</p>"
         },
         "ConnectionType":{
-          "shape":"EnclosedInStringProperty",
+          "shape":"CustomConnectorConnectionType",
           "documentation":"<p>The type of connection, such as marketplace.athena or custom.athena, designating a connection to an Amazon Athena data store.</p>"
         },
         "ConnectionTable":{
@@ -2923,11 +2987,22 @@
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The name of the Cloudwatch log group to read from. For example, <code>/aws-glue/jobs/output</code>.</p>"
         },
-        "outputSchemas":{"shape":"GlueStudioSchemas"}
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies a connector to an Amazon Athena data source.</p>"
     },
     "AttemptCount":{"type":"integer"},
+    "AuditContext":{
+      "type":"structure",
+      "members":{
+        "AdditionalAuditContext":{"shape":"AuditContextString"}
+      }
+    },
+    "AuditContextString":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
     "BackfillError":{
       "type":"structure",
       "members":{
@@ -3115,7 +3190,8 @@
         "TablesToDelete":{
           "shape":"BatchDeleteTableNameList",
           "documentation":"<p>A list of the table to delete.</p>"
-        }
+        },
+        "TransactionId":{"shape":"TransactionIdString"}
       }
     },
     "BatchDeleteTableResponse":{
@@ -4096,8 +4172,8 @@
           "shape":"S3CatalogSource",
           "documentation":"<p>Specifies an Amazon S3 data store in the Glue Data Catalog.</p>"
         },
-        "S3CSVSource":{
-          "shape":"S3CSVSource",
+        "S3CsvSource":{
+          "shape":"S3CsvSource",
           "documentation":"<p>Specifies a command-separated value (CSV) data store stored in Amazon S3.</p>"
         },
         "S3JsonSource":{
@@ -4218,7 +4294,9 @@
         },
         "PIIDetection":{"shape":"PIIDetection"},
         "Aggregate":{"shape":"Aggregate"},
-        "DropDuplicates":{"shape":"DropDuplicates"}
+        "DropDuplicates":{"shape":"DropDuplicates"},
+        "GovernedCatalogTarget":{"shape":"GovernedCatalogTarget"},
+        "GovernedCatalogSource":{"shape":"GovernedCatalogSource"}
       },
       "documentation":"<p> <code>CodeGenConfigurationNode</code> enumerates all valid Node types. One and only one of its member variables can be populated.</p>"
     },
@@ -4384,6 +4462,17 @@
       "max":1024,
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
+    "ColumnRowFilter":{
+      "type":"structure",
+      "members":{
+        "ColumnName":{"shape":"NameString"},
+        "RowFilterExpression":{"shape":"PredicateString"}
+      }
+    },
+    "ColumnRowFilterList":{
+      "type":"list",
+      "member":{"shape":"ColumnRowFilter"}
     },
     "ColumnStatistics":{
       "type":"structure",
@@ -5129,7 +5218,8 @@
         "ConnectionInput":{
           "shape":"ConnectionInput",
           "documentation":"<p>A <code>ConnectionInput</code> object defining the connection to create.</p>"
-        }
+        },
+        "Tags":{"shape":"TagsMap"}
       }
     },
     "CreateConnectionResponse":{
@@ -5447,36 +5537,94 @@
         "Command"
       ],
       "members":{
-        "Name":{"shape":"NameString"},
-        "Description":{"shape":"DescriptionString"},
-        "LogUri":{"shape":"UriString"},
-        "Role":{"shape":"RoleString"},
-        "ExecutionProperty":{"shape":"ExecutionProperty"},
-        "Command":{"shape":"JobCommand"},
-        "DefaultArguments":{"shape":"GenericMap"},
-        "NonOverridableArguments":{"shape":"GenericMap"},
-        "Connections":{"shape":"ConnectionsList"},
-        "MaxRetries":{"shape":"MaxRetries"},
+        "Name":{
+          "shape":"NameString",
+          "documentation":"<p>The name you assign to this job definition. It must be unique in your account.</p>"
+        },
+        "Description":{
+          "shape":"DescriptionString",
+          "documentation":"<p>Description of the job being defined.</p>"
+        },
+        "LogUri":{
+          "shape":"UriString",
+          "documentation":"<p>This field is reserved for future use.</p>"
+        },
+        "Role":{
+          "shape":"RoleString",
+          "documentation":"<p>The name or Amazon Resource Name (ARN) of the IAM role associated with this job.</p>"
+        },
+        "ExecutionProperty":{
+          "shape":"ExecutionProperty",
+          "documentation":"<p>An <code>ExecutionProperty</code> specifying the maximum number of concurrent runs allowed for this job.</p>"
+        },
+        "Command":{
+          "shape":"JobCommand",
+          "documentation":"<p>The <code>JobCommand</code> that runs this job.</p>"
+        },
+        "DefaultArguments":{
+          "shape":"GenericMap",
+          "documentation":"<p>The default arguments for this job.</p> <p>You can specify arguments here that your own job-execution script consumes, as well as arguments that Glue itself consumes.</p> <p>For information about how to specify and consume your own Job arguments, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html\">Calling Glue APIs in Python</a> topic in the developer guide.</p> <p>For information about the key-value pairs that Glue consumes to set up your job, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Special Parameters Used by Glue</a> topic in the developer guide.</p>"
+        },
+        "NonOverridableArguments":{
+          "shape":"GenericMap",
+          "documentation":"<p>Non-overridable arguments for this job, specified as name-value pairs.</p>"
+        },
+        "Connections":{
+          "shape":"ConnectionsList",
+          "documentation":"<p>The connections used for this job.</p>"
+        },
+        "MaxRetries":{
+          "shape":"MaxRetries",
+          "documentation":"<p>The maximum number of times to retry this job if it fails.</p>"
+        },
         "AllocatedCapacity":{
           "shape":"IntegerValue",
+          "documentation":"<p>This parameter is deprecated. Use <code>MaxCapacity</code> instead.</p> <p>The number of Glue data processing units (DPUs) to allocate to this Job. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>.</p>",
           "deprecated":true,
           "deprecatedMessage":"This property is deprecated, use MaxCapacity instead."
         },
-        "Timeout":{"shape":"Timeout"},
-        "MaxCapacity":{"shape":"NullableDouble"},
-        "SecurityConfiguration":{"shape":"NameString"},
-        "Tags":{"shape":"TagsMap"},
-        "NotificationProperty":{"shape":"NotificationProperty"},
-        "GlueVersion":{"shape":"GlueVersionString"},
-        "NumberOfWorkers":{"shape":"NullableInteger"},
-        "WorkerType":{"shape":"WorkerType"},
+        "Timeout":{
+          "shape":"Timeout",
+          "documentation":"<p>The job timeout in minutes. This is the maximum time that a job run can consume resources before it is terminated and enters <code>TIMEOUT</code> status. The default is 2,880 minutes (48 hours).</p>"
+        },
+        "MaxCapacity":{
+          "shape":"NullableDouble",
+          "documentation":"<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul> <p>For Glue version 2.0 jobs, you cannot instead specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p>"
+        },
+        "SecurityConfiguration":{
+          "shape":"NameString",
+          "documentation":"<p>The name of the <code>SecurityConfiguration</code> structure to be used with this job.</p>"
+        },
+        "Tags":{
+          "shape":"TagsMap",
+          "documentation":"<p>The tags to use with this job. You may use tags to limit access to the job. For more information about tags in Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">Amazon Web Services Tags in Glue</a> in the developer guide.</p>"
+        },
+        "NotificationProperty":{
+          "shape":"NotificationProperty",
+          "documentation":"<p>Specifies configuration properties of a job notification.</p>"
+        },
+        "GlueVersion":{
+          "shape":"GlueVersionString",
+          "documentation":"<p>Glue version determines the versions of Apache Spark and Python that Glue supports. The Python version indicates the version supported for jobs of type Spark. </p> <p>For more information about the available Glue versions and corresponding Spark and Python versions, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-job.html\">Glue version</a> in the developer guide.</p> <p>Jobs that are created without specifying a Glue version default to Glue 0.9.</p>"
+        },
+        "NumberOfWorkers":{
+          "shape":"NullableInteger",
+          "documentation":"<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p> <p>The maximum number of workers you can define are 299 for <code>G.1X</code>, and 149 for <code>G.2X</code>. </p>"
+        },
+        "WorkerType":{
+          "shape":"WorkerType",
+          "documentation":"<p>The type of predefined worker that is allocated when a job runs. Accepts a value of Standard, G.1X, or G.2X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of memory, 128 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> </ul>"
+        },
         "CodeGenConfigurationNodes":{"shape":"CodeGenConfigurationNodes"}
       }
     },
     "CreateJobResponse":{
       "type":"structure",
       "members":{
-        "Name":{"shape":"NameString"}
+        "Name":{
+          "shape":"NameString",
+          "documentation":"<p>The unique name that was provided for this job definition.</p>"
+        }
       }
     },
     "CreateJsonClassifierRequest":{
@@ -5850,7 +5998,8 @@
         "PartitionIndexes":{
           "shape":"PartitionIndexList",
           "documentation":"<p>A list of partition indexes, <code>PartitionIndex</code> structures, to create in the table.</p>"
-        }
+        },
+        "TransactionId":{"shape":"TransactionIdString"}
       }
     },
     "CreateTableResponse":{
@@ -6098,9 +6247,20 @@
           "shape":"GenericLimitedString",
           "documentation":"<p>The name defined for the custom code node class.</p>"
         },
-        "outputSchemas":{"shape":"GlueStudioSchemas"}
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies a transform that uses custom code you provide to perform the data transformation. The output is a collection of DynamicFrames.</p>"
+    },
+    "CustomConnectorConnectionType":{
+      "type":"string",
+      "enum":[
+        "custom.jdbc",
+        "custom.spark",
+        "custom.athena",
+        "marketplace.jdbc",
+        "marketplace.spark",
+        "marketplace.athena"
+      ]
     },
     "CustomPatterns":{
       "type":"string",
@@ -6111,31 +6271,31 @@
     "DDBELTConnectionOptions":{
       "type":"structure",
       "required":[
-        "dynamodbUseExportConnector",
-        "dynamodbTableArn"
+        "DynamodbUseExportConnector",
+        "DynamodbTableArn"
       ],
       "members":{
-        "dynamodbUseExportConnector":{
+        "DynamodbUseExportConnector":{
           "shape":"BooleanValue",
           "documentation":"<p>Specifies exporting your Amazon DynamoDB table data to Amazon S3.</p>"
         },
-        "dynamodbTableArn":{
+        "DynamodbTableArn":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The Amazon Resource Name (ARN) of the DynamoDB table to read from.</p>"
         },
-        "dynamodbS3Bucket":{
+        "DynamodbS3Bucket":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The name of the Amazon S3 bucket where your DynamoDB table is stored.</p>"
         },
-        "dynamodbS3Prefix":{
+        "DynamodbS3Prefix":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The Amazon S3 bucket prefix.</p>"
         },
-        "dynamodbS3BucketOwner":{
+        "DynamodbS3BucketOwner":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The AWS account used to create the bucket.</p>"
         },
-        "dynamodbStsRoleArn":{
+        "DynamodbStsRoleArn":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The IAM role ARN to be assumed for cross-account access. This parameter is available in AWS Glue 1.0 or later.</p>"
         }
@@ -6777,7 +6937,8 @@
         "Name":{
           "shape":"NameString",
           "documentation":"<p>The name of the table to be deleted. For Hive compatibility, this name is entirely lowercase.</p>"
-        }
+        },
+        "TransactionId":{"shape":"TransactionIdString"}
       }
     },
     "DeleteTableResponse":{
@@ -7142,7 +7303,7 @@
       "members":{
         "Name":{"shape":"NodeName"},
         "Inputs":{"shape":"OneInput"},
-        "columns":{"shape":"LimitedStringList"}
+        "Columns":{"shape":"LimitedPathList"}
       }
     },
     "DropFields":{
@@ -7162,7 +7323,7 @@
           "documentation":"<p>The data inputs identified by their node names.</p>"
         },
         "Paths":{
-          "shape":"EnclosedInStringProperties",
+          "shape":"GlueStudioPathList",
           "documentation":"<p>A JSON path to a variable in the data structure.</p>"
         }
       },
@@ -7269,12 +7430,6 @@
       "max":100,
       "min":0
     },
-    "EnclosedInStringPropertiesWithQuote":{
-      "type":"list",
-      "member":{"shape":"EnclosedInStringPropertyWithQuote"},
-      "max":100,
-      "min":0
-    },
     "EnclosedInStringProperty":{
       "type":"string",
       "max":256,
@@ -7330,6 +7485,34 @@
       },
       "documentation":"<p>A specified entity does not exist</p>",
       "exception":true
+    },
+    "EntityTypeToDetect":{
+      "type":"string",
+      "enum":[
+        "PERSON_NAME",
+        "DATE",
+        "USA_SSN",
+        "EMAIL",
+        "USA_ITIN",
+        "USA_PASSPORT_NUMBER",
+        "PHONE_NUMBER",
+        "BANK_ACCOUNT",
+        "IP_ADDRESS",
+        "MAC_ADDRESS",
+        "USA_CPT_CODE",
+        "USA_HCPCS_CODE",
+        "USA_NATIONAL_DRUG_CODE",
+        "USA_MEDICARE_BENEFICIARY_IDENTIFIER",
+        "USA_HEALTH_INSURANCE_CLAIM_NUMBER",
+        "CREDIT_CARD",
+        "USA_NATIONAL_PROVIDER_IDENTIFIER",
+        "USA_DEA_NUMBER",
+        "USA_DRIVING_LICENSE"
+      ]
+    },
+    "EntityTypesToDetect":{
+      "type":"list",
+      "member":{"shape":"EntityTypeToDetect"}
     },
     "ErrorByName":{
       "type":"map",
@@ -7450,7 +7633,7 @@
           "documentation":"<p>The data inputs identified by their node names.</p>"
         },
         "ImputedPath":{
-          "shape":"EnclosedInStringProperty",
+          "shape":"EnclosedInStringProperties",
           "documentation":"<p>A JSON path to a variable in the data structure for the dataset that is imputed.</p>"
         },
         "FilledPath":{
@@ -8230,14 +8413,19 @@
       "type":"structure",
       "required":["JobName"],
       "members":{
-        "JobName":{"shape":"NameString"}
+        "JobName":{
+          "shape":"NameString",
+          "documentation":"<p>The name of the job definition to retrieve.</p>"
+        }
       }
     },
     "GetJobResponse":{
       "type":"structure",
       "members":{
-        "Job":{"shape":"Job"},
-        "CodeGenConfigurationNodes":{"shape":"CodeGenConfigurationNodes"}
+        "Job":{
+          "shape":"Job",
+          "documentation":"<p>The requested job definition.</p>"
+        }
       }
     },
     "GetJobRunRequest":{
@@ -8693,7 +8881,9 @@
         "ExcludeColumnSchema":{
           "shape":"BooleanNullable",
           "documentation":"<p>When true, specifies not returning the partition column schema. Useful when you are interested only in other partition attributes such as partition values or location. This approach avoids the problem of a large response by not returning duplicate data.</p>"
-        }
+        },
+        "TransactionId":{"shape":"TransactionIdString"},
+        "QueryAsOfTime":{"shape":"Timestamp"}
       }
     },
     "GetPartitionsResponse":{
@@ -9112,7 +9302,9 @@
         "Name":{
           "shape":"NameString",
           "documentation":"<p>The name of the table for which to retrieve the definition. For Hive compatibility, this name is entirely lowercase.</p>"
-        }
+        },
+        "TransactionId":{"shape":"TransactionIdString"},
+        "QueryAsOfTime":{"shape":"Timestamp"}
       }
     },
     "GetTableResponse":{
@@ -9227,7 +9419,9 @@
         "MaxResults":{
           "shape":"CatalogGetterPageSize",
           "documentation":"<p>The maximum number of tables to return in a single response.</p>"
-        }
+        },
+        "TransactionId":{"shape":"TransactionIdString"},
+        "QueryAsOfTime":{"shape":"Timestamp"}
       }
     },
     "GetTablesResponse":{
@@ -9309,6 +9503,84 @@
           "shape":"GenericString",
           "documentation":"<p>A continuation token, if not all the requested triggers have yet been returned.</p>"
         }
+      }
+    },
+    "GetUnfilteredPartitionMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "CatalogId",
+        "DatabaseName",
+        "TableName",
+        "PartitionValues",
+        "SupportedPermissionTypes"
+      ],
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"},
+        "PartitionValues":{"shape":"ValueStringList"},
+        "AuditContext":{"shape":"AuditContext"},
+        "SupportedPermissionTypes":{"shape":"PermissionTypeList"}
+      }
+    },
+    "GetUnfilteredPartitionMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "Partition":{"shape":"Partition"},
+        "AuthorizedColumns":{"shape":"NameStringList"},
+        "IsRegisteredWithLakeFormation":{"shape":"Boolean"}
+      }
+    },
+    "GetUnfilteredPartitionsMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "CatalogId",
+        "DatabaseName",
+        "TableName",
+        "SupportedPermissionTypes"
+      ],
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"},
+        "Expression":{"shape":"PredicateString"},
+        "AuditContext":{"shape":"AuditContext"},
+        "SupportedPermissionTypes":{"shape":"PermissionTypeList"},
+        "NextToken":{"shape":"Token"},
+        "Segment":{"shape":"Segment"},
+        "MaxResults":{"shape":"PageSize"}
+      }
+    },
+    "GetUnfilteredPartitionsMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "UnfilteredPartitions":{"shape":"UnfilteredPartitionList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "GetUnfilteredTableMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "CatalogId",
+        "DatabaseName",
+        "Name",
+        "SupportedPermissionTypes"
+      ],
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "DatabaseName":{"shape":"NameString"},
+        "Name":{"shape":"NameString"},
+        "AuditContext":{"shape":"AuditContext"},
+        "SupportedPermissionTypes":{"shape":"PermissionTypeList"}
+      }
+    },
+    "GetUnfilteredTableMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "Table":{"shape":"Table"},
+        "AuthorizedColumns":{"shape":"NameStringList"},
+        "IsRegisteredWithLakeFormation":{"shape":"Boolean"},
+        "CellFilters":{"shape":"ColumnRowFilterList"}
       }
     },
     "GetUserDefinedFunctionRequest":{
@@ -9527,72 +9799,42 @@
       },
       "documentation":"<p>A structure for returning a resource policy.</p>"
     },
+    "GlueRecordType":{
+      "type":"string",
+      "enum":[
+        "DATE",
+        "STRING",
+        "TIMESTAMP",
+        "INT",
+        "FLOAT",
+        "LONG",
+        "BIGDECIMAL",
+        "BYTE",
+        "SHORT",
+        "DOUBLE"
+      ]
+    },
     "GlueResourceArn":{
       "type":"string",
       "max":10240,
       "min":1,
       "pattern":"arn:aws:glue:.*"
     },
-    "GlueStudioColumn":{
+    "GlueSchema":{
       "type":"structure",
-      "required":[
-        "Key",
-        "FullPath",
-        "Type"
-      ],
       "members":{
-        "Key":{"shape":"EnclosedInStringPropertyWithQuote"},
-        "FullPath":{"shape":"EnclosedInStringPropertiesWithQuote"},
-        "Type":{"shape":"GlueStudioColumnType"},
-        "Children":{"shape":"GlueStudioColumnList"}
+        "Columns":{"shape":"ColumnList"}
       }
     },
-    "GlueStudioColumnList":{
+    "GlueSchemas":{
       "type":"list",
-      "member":{"shape":"GlueStudioColumn"}
+      "member":{"shape":"GlueSchema"}
     },
-    "GlueStudioColumnType":{
-      "type":"string",
-      "enum":[
-        "array",
-        "BIGINT",
-        "bigint array",
-        "binary",
-        "binary array",
-        "boolean",
-        "boolean array",
-        "char",
-        "char array",
-        "date",
-        "date array",
-        "decimal",
-        "decimal array",
-        "double",
-        "double array",
-        "float",
-        "float array",
-        "int",
-        "int array",
-        "interval",
-        "interval array",
-        "long",
-        "long array",
-        "object",
-        "smallint",
-        "smallint array",
-        "string",
-        "string array",
-        "timestamp",
-        "timestamp array",
-        "tinyint",
-        "tinyint array",
-        "varchar",
-        "varchar array"
-      ]
-    },
-    "GlueStudioSchemas":{
+    "GlueStudioPathList":{
       "type":"list",
-      "member":{"shape":"GlueStudioColumnList"}
+      "member":{"shape":"EnclosedInStringProperties"},
+      "max":100,
+      "min":0
     },
     "GlueTable":{
       "type":"structure",
@@ -9631,6 +9873,38 @@
       "max":255,
       "min":1,
       "pattern":"^\\w+\\.\\w+$"
+    },
+    "GovernedCatalogSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "PartitionPredicate":{"shape":"EnclosedInStringProperty"},
+        "AdditionalOptions":{"shape":"S3SourceAdditionalOptions"}
+      }
+    },
+    "GovernedCatalogTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Table",
+        "Database"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"}
+      }
     },
     "GrokClassifier":{
       "type":"structure",
@@ -9780,6 +10054,13 @@
       "documentation":"<p>The input provided was not valid.</p>",
       "exception":true
     },
+    "InvalidStateException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
+    },
     "IsVersionValid":{"type":"boolean"},
     "JDBCConnectorOptions":{
       "type":"structure",
@@ -9808,11 +10089,11 @@
           "shape":"EnclosedInStringProperties",
           "documentation":"<p>The name of the job bookmark keys on which to sort.</p>"
         },
-        "jobBookmarkKeysSortOrder":{
+        "JobBookmarkKeysSortOrder":{
           "shape":"JobBookmarkKeysSortOrder",
           "documentation":"<p>Specifies an ascending or descending sort order.</p>"
         },
-        "dataTypeMapping":{
+        "DataTypeMapping":{
           "shape":"JDBCDataTypeMapping",
           "documentation":"<p>Custom data type mapping that builds a mapping from a JDBC data type to an Glue data type. For example, the option <code>\"dataTypeMapping\":{\"FLOAT\":\"STRING\"}</code> maps data fields of JDBC type <code>FLOAT</code> into the Java <code>String</code> type by calling the <code>ResultSet.getString()</code> method of the driver, and uses it to build the Glue record. The <code>ResultSet</code> object is implemented by each driver, so the behavior is specific to the driver you use. Refer to the documentation for your JDBC driver to understand how the driver performs the conversions.</p>"
         }
@@ -9824,6 +10105,7 @@
       "required":[
         "Name",
         "ConnectionName",
+        "ConnectorName",
         "ConnectionType"
       ],
       "members":{
@@ -9840,7 +10122,7 @@
           "documentation":"<p>The name of a connector that assists with accessing the data store in Glue Studio.</p>"
         },
         "ConnectionType":{
-          "shape":"EnclosedInStringProperty",
+          "shape":"CustomConnectorConnectionType",
           "documentation":"<p>The type of connection, such as marketplace.jdbc or custom.jdbc, designating a connection to a JDBC data store.</p>"
         },
         "AdditionalOptions":{
@@ -9851,11 +10133,11 @@
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The name of the table in the data source.</p>"
         },
-        "query":{
+        "Query":{
           "shape":"SqlQuery",
           "documentation":"<p>The table or SQL query to get the data from. You can specify either <code>ConnectionTable</code> or <code>query</code>, but not both.</p>"
         },
-        "outputSchemas":{"shape":"GlueStudioSchemas"}
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies a connector to a JDBC data source.</p>"
     },
@@ -9866,6 +10148,7 @@
         "Inputs",
         "ConnectionName",
         "ConnectionTable",
+        "ConnectorName",
         "ConnectionType"
       ],
       "members":{
@@ -9890,14 +10173,14 @@
           "documentation":"<p>The name of a connector that will be used.</p>"
         },
         "ConnectionType":{
-          "shape":"EnclosedInStringProperty",
+          "shape":"CustomConnectorConnectionType",
           "documentation":"<p>The type of connection, such as marketplace.jdbc or custom.jdbc, designating a connection to a JDBC data target.</p>"
         },
         "AdditionalOptions":{
           "shape":"AdditionalOptions",
           "documentation":"<p>Additional connection options for the connector.</p>"
         },
-        "outputSchemas":{"shape":"GlueStudioSchemas"}
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies a data target that writes to Amazon S3 in Apache Parquet columnar storage.</p>"
     },
@@ -9948,7 +10231,7 @@
     "JDBCDataTypeMapping":{
       "type":"map",
       "key":{"shape":"JDBCDataType"},
-      "value":{"shape":"JDBCDataType"}
+      "value":{"shape":"GlueRecordType"}
     },
     "JdbcTarget":{
       "type":"structure",
@@ -10056,7 +10339,8 @@
         "GlueVersion":{
           "shape":"GlueVersionString",
           "documentation":"<p>Glue version determines the versions of Apache Spark and Python that Glue supports. The Python version indicates the version supported for jobs of type Spark. </p> <p>For more information about the available Glue versions and corresponding Spark and Python versions, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-job.html\">Glue version</a> in the developer guide.</p> <p>Jobs that are created without specifying a Glue version default to Glue 0.9.</p>"
-        }
+        },
+        "CodeGenConfigurationNodes":{"shape":"CodeGenConfigurationNodes"}
       },
       "documentation":"<p>Specifies a job definition.</p>"
     },
@@ -10343,7 +10627,8 @@
         "GlueVersion":{
           "shape":"GlueVersionString",
           "documentation":"<p>Glue version determines the versions of Apache Spark and Python that Glue supports. The Python version indicates the version supported for jobs of type Spark. </p> <p>For more information about the available Glue versions and corresponding Spark and Python versions, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-job.html\">Glue version</a> in the developer guide.</p>"
-        }
+        },
+        "CodeGenConfigurationNodes":{"shape":"CodeGenConfigurationNodes"}
       },
       "documentation":"<p>Specifies information used to update an existing job definition. The previous job definition is completely overwritten by this information.</p>"
     },
@@ -10378,16 +10663,16 @@
     "JoinColumn":{
       "type":"structure",
       "required":[
-        "from",
-        "keys"
+        "From",
+        "Keys"
       ],
       "members":{
-        "from":{
+        "From":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The column to be joined.</p>"
         },
-        "keys":{
-          "shape":"EnclosedInStringProperties",
+        "Keys":{
+          "shape":"GlueStudioPathList",
           "documentation":"<p>The key of the column to be joined.</p>"
         }
       },
@@ -10605,15 +10890,15 @@
           "shape":"BooleanValue",
           "documentation":"<p>Avoids creating an empty microbatch job by checking for unread data in the Kinesis data stream before the batch is started. The default value is <code>\"False\"</code>.</p>"
         },
-        "StreamARN":{
+        "StreamArn":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The Amazon Resource Name (ARN) of the Kinesis data stream.</p>"
         },
-        "AwsSTSRoleARN":{
+        "RoleArn":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The Amazon Resource Name (ARN) of the role to assume using AWS Security Token Service (AWS STS). This role must have permissions for describe or read record operations for the Kinesis data stream. You must use this parameter when accessing a data stream in a different account. Used in conjunction with <code>\"awsSTSSessionName\"</code>.</p>"
         },
-        "AwsSTSSessionName":{
+        "RoleSessionName":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>An identifier for the session assuming the role using AWS STS. You must use this parameter when accessing a data stream in a different account. Used in conjunction with <code>\"awsSTSRoleARN\"</code>.</p>"
         }
@@ -10707,6 +10992,12 @@
       ]
     },
     "LatestSchemaVersionBoolean":{"type":"boolean"},
+    "LimitedPathList":{
+      "type":"list",
+      "member":{"shape":"LimitedStringList"},
+      "max":100,
+      "min":0
+    },
     "LimitedStringList":{
       "type":"list",
       "member":{"shape":"GenericLimitedString"},
@@ -11057,6 +11348,10 @@
       "max":2056,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
+    "LocationStringList":{
+      "type":"list",
+      "member":{"shape":"LocationString"}
+    },
     "LogGroup":{
       "type":"string",
       "max":512,
@@ -11353,7 +11648,7 @@
           "documentation":"<p>The source <code>DynamicFrame</code> that will be merged with a staging <code>DynamicFrame</code>.</p>"
         },
         "PrimaryKeys":{
-          "shape":"EnclosedInStringProperties",
+          "shape":"GlueStudioPathList",
           "documentation":"<p>The list of primary key fields to match records from the source and staging dynamic frames.</p>"
         }
       },
@@ -11697,7 +11992,7 @@
         "Name":{"shape":"NodeName"},
         "Inputs":{"shape":"OneInput"},
         "PiiType":{"shape":"PiiType"},
-        "EntityTypesToDetect":{"shape":"EnclosedInStringProperties"},
+        "EntityTypesToDetect":{"shape":"EntityTypesToDetect"},
         "OutputColumnName":{"shape":"EnclosedInStringProperty"},
         "SampleFraction":{"shape":"BoxedDoubleFraction"},
         "ThresholdFraction":{"shape":"BoxedDoubleFraction"},
@@ -11921,6 +12216,26 @@
     "PermissionList":{
       "type":"list",
       "member":{"shape":"Permission"}
+    },
+    "PermissionType":{
+      "type":"string",
+      "enum":[
+        "COLUMN_PERMISSION",
+        "CELL_FILTER_PERMISSION"
+      ]
+    },
+    "PermissionTypeList":{
+      "type":"list",
+      "member":{"shape":"PermissionType"},
+      "max":255,
+      "min":1
+    },
+    "PermissionTypeMismatchException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
     },
     "PhysicalConnectionRequirements":{
       "type":"structure",
@@ -12247,6 +12562,14 @@
         }
       }
     },
+    "QuoteChar":{
+      "type":"string",
+      "enum":[
+        "quote",
+        "\\u00ab",
+        "'"
+      ]
+    },
     "RecordsCount":{
       "type":"long",
       "box":true
@@ -12292,7 +12615,7 @@
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The Amazon S3 path where temporary data can be staged when copying out of the database.</p>"
         },
-        "tmpDirIAMRole":{
+        "TmpDirIAMRole":{
           "shape":"EnclosedInStringProperty",
           "documentation":"<p>The IAM role with permissions.</p>"
         }
@@ -12536,6 +12859,13 @@
         }
       }
     },
+    "ResourceNotReadyException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
+    },
     "ResourceNumberLimitExceededException":{
       "type":"structure",
       "members":{
@@ -12625,11 +12955,80 @@
     "RoleString":{"type":"string"},
     "RowTag":{"type":"string"},
     "RunId":{"type":"string"},
-    "S3CSVSource":{
+    "S3CatalogSource":{
       "type":"structure",
       "required":[
         "Name",
-        "Paths"
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{
+          "shape":"NodeName",
+          "documentation":"<p>The name of the data store.</p>"
+        },
+        "Database":{
+          "shape":"EnclosedInStringProperty",
+          "documentation":"<p>The database to read from.</p>"
+        },
+        "Table":{
+          "shape":"EnclosedInStringProperty",
+          "documentation":"<p>The database table to read from.</p>"
+        },
+        "PartitionPredicate":{
+          "shape":"EnclosedInStringProperty",
+          "documentation":"<p>Partitions satisfying this predicate are deleted. Files within the retention period in these partitions are not deleted. Set to <code>\"\"</code> – empty by default.</p>"
+        },
+        "AdditionalOptions":{
+          "shape":"S3SourceAdditionalOptions",
+          "documentation":"<p>Specifies additional connection options.</p>"
+        }
+      },
+      "documentation":"<p>Specifies an Amazon S3 data store in the Glue Data Catalog.</p>"
+    },
+    "S3CatalogTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Table",
+        "Database"
+      ],
+      "members":{
+        "Name":{
+          "shape":"NodeName",
+          "documentation":"<p>The name of the data target.</p>"
+        },
+        "Inputs":{
+          "shape":"OneInput",
+          "documentation":"<p>The nodes that are inputs to the data target.</p>"
+        },
+        "PartitionKeys":{
+          "shape":"GlueStudioPathList",
+          "documentation":"<p>Specifies native partitioning using a sequence of keys.</p>"
+        },
+        "Table":{
+          "shape":"EnclosedInStringProperty",
+          "documentation":"<p>The name of the table in the database to write to.</p>"
+        },
+        "Database":{
+          "shape":"EnclosedInStringProperty",
+          "documentation":"<p>The name of the database to write to.</p>"
+        },
+        "SchemaChangePolicy":{
+          "shape":"CatalogSchemaChangePolicy",
+          "documentation":"<p>A policy that specifies update behavior for the crawler.</p>"
+        }
+      },
+      "documentation":"<p>Specifies a data target that writes to Amazon S3 using the Glue Data Catalog.</p>"
+    },
+    "S3CsvSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Paths",
+        "Separator",
+        "QuoteChar"
       ],
       "members":{
         "Name":{
@@ -12673,7 +13072,7 @@
           "documentation":"<p>Specifies additional connection options.</p>"
         },
         "Separator":{
-          "shape":"EnclosedInStringProperty",
+          "shape":"Separator",
           "documentation":"<p>Specifies the delimiter character. The default is a comma: \",\", but any other character can be specified.</p>"
         },
         "Escaper":{
@@ -12681,7 +13080,7 @@
           "documentation":"<p>Specifies a character to use for escaping. This option is used only when reading CSV files. The default value is <code>none</code>. If enabled, the character which immediately follows is used as-is, except for a small set of well-known escapes (<code>\\n</code>, <code>\\r</code>, <code>\\t</code>, and <code>\\0</code>).</p>"
         },
         "QuoteChar":{
-          "shape":"EnclosedInStringPropertyWithQuote",
+          "shape":"QuoteChar",
           "documentation":"<p>Specifies the character to use for quoting. The default is a double quote: <code>'\"'</code>. Set this to <code>-1</code> to turn off quoting entirely.</p>"
         },
         "Multiline":{
@@ -12700,79 +13099,13 @@
           "shape":"BooleanValue",
           "documentation":"<p>A Boolean value that specifies whether to skip the first data line. The default value is <code>False</code>.</p>"
         },
-        "optimizePerformance":{
+        "OptimizePerformance":{
           "shape":"BooleanValue",
           "documentation":"<p>A Boolean value that specifies whether to use the advanced SIMD CSV reader along with Apache Arrow based columnar memory formats. Only available in AWS Glue 3.0.</p>"
-        }
+        },
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies a command-separated value (CSV) data store stored in Amazon S3.</p>"
-    },
-    "S3CatalogSource":{
-      "type":"structure",
-      "required":[
-        "Name",
-        "Database",
-        "Table"
-      ],
-      "members":{
-        "Name":{
-          "shape":"NodeName",
-          "documentation":"<p>The name of the data store.</p>"
-        },
-        "Database":{
-          "shape":"EnclosedInStringProperty",
-          "documentation":"<p>The database to read from.</p>"
-        },
-        "Table":{
-          "shape":"EnclosedInStringProperty",
-          "documentation":"<p>The database table to read from.</p>"
-        },
-        "PartitionPredicate":{
-          "shape":"EnclosedInStringProperty",
-          "documentation":"<p>Partitions satisfying this predicate are deleted. Files within the retention period in these partitions are not deleted. Set to <code>\"\"</code> – empty by default.</p>"
-        },
-        "additionalOptions":{
-          "shape":"S3SourceAdditionalOptions",
-          "documentation":"<p>Specifies additional connection options.</p>"
-        }
-      },
-      "documentation":"<p>Specifies an Amazon S3 data store in the Glue Data Catalog.</p>"
-    },
-    "S3CatalogTarget":{
-      "type":"structure",
-      "required":[
-        "Name",
-        "Inputs",
-        "Table",
-        "Database"
-      ],
-      "members":{
-        "Name":{
-          "shape":"NodeName",
-          "documentation":"<p>The name of the data target.</p>"
-        },
-        "Inputs":{
-          "shape":"OneInput",
-          "documentation":"<p>The nodes that are inputs to the data target.</p>"
-        },
-        "PartitionKeys":{
-          "shape":"EnclosedInStringProperties",
-          "documentation":"<p>Specifies native partitioning using a sequence of keys.</p>"
-        },
-        "Table":{
-          "shape":"EnclosedInStringProperty",
-          "documentation":"<p>The name of the table in the database to write to.</p>"
-        },
-        "Database":{
-          "shape":"EnclosedInStringProperty",
-          "documentation":"<p>The name of the database to write to.</p>"
-        },
-        "SchemaChangePolicy":{
-          "shape":"CatalogSchemaChangePolicy",
-          "documentation":"<p>A policy that specifies update behavior for the crawler.</p>"
-        }
-      },
-      "documentation":"<p>Specifies a data target that writes to Amazon S3 using the Glue Data Catalog.</p>"
     },
     "S3DirectTarget":{
       "type":"structure",
@@ -12792,7 +13125,7 @@
           "documentation":"<p>The nodes that are inputs to the data target.</p>"
         },
         "PartitionKeys":{
-          "shape":"EnclosedInStringProperties",
+          "shape":"GlueStudioPathList",
           "documentation":"<p>Specifies native partitioning using a sequence of keys.</p>"
         },
         "Path":{
@@ -12865,7 +13198,7 @@
           "documentation":"<p>The nodes that are inputs to the data target.</p>"
         },
         "PartitionKeys":{
-          "shape":"EnclosedInStringProperties",
+          "shape":"GlueStudioPathList",
           "documentation":"<p>Specifies native partitioning using a sequence of keys.</p>"
         },
         "Path":{
@@ -12937,7 +13270,8 @@
         "Multiline":{
           "shape":"BooleanValue",
           "documentation":"<p>A Boolean value that specifies whether a single record can span multiple lines. This can occur when a field contains a quoted new-line character. You must set this option to True if any record spans multiple lines. The default value is <code>False</code>, which allows for more aggressive file-splitting during parsing.</p>"
-        }
+        },
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies a JSON data store stored in Amazon S3.</p>"
     },
@@ -12987,7 +13321,8 @@
         "AdditionalOptions":{
           "shape":"S3SourceAdditionalOptions",
           "documentation":"<p>Specifies additional connection options.</p>"
-        }
+        },
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies an Apache Parquet data store stored in Amazon S3.</p>"
     },
@@ -13423,7 +13758,7 @@
           "documentation":"<p>The data inputs identified by their node names.</p>"
         },
         "Paths":{
-          "shape":"EnclosedInStringProperties",
+          "shape":"GlueStudioPathList",
           "documentation":"<p>A JSON path to a variable in the data structure.</p>"
         }
       },
@@ -13451,6 +13786,16 @@
         }
       },
       "documentation":"<p>Specifies a transform that chooses one <code>DynamicFrame</code> from a collection of <code>DynamicFrames</code>. The output is the selected <code>DynamicFrame</code> </p>"
+    },
+    "Separator":{
+      "type":"string",
+      "enum":[
+        "comma",
+        "ctrla",
+        "pipe",
+        "semicolon",
+        "tab"
+      ]
     },
     "SerDeInfo":{
       "type":"structure",
@@ -13527,6 +13872,7 @@
       "required":[
         "Name",
         "ConnectionName",
+        "ConnectorName",
         "ConnectionType"
       ],
       "members":{
@@ -13543,14 +13889,14 @@
           "documentation":"<p>The name of a connector that assists with accessing the data store in Glue Studio.</p>"
         },
         "ConnectionType":{
-          "shape":"EnclosedInStringProperty",
+          "shape":"CustomConnectorConnectionType",
           "documentation":"<p>The type of connection, such as marketplace.spark or custom.spark, designating a connection to an Apache Spark data store.</p>"
         },
         "AdditionalOptions":{
           "shape":"AdditionalOptions",
           "documentation":"<p>Additional connection options for the connector.</p>"
         },
-        "outputSchemas":{"shape":"GlueStudioSchemas"}
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies a connector to an Apache Spark data source.</p>"
     },
@@ -13560,6 +13906,7 @@
         "Name",
         "Inputs",
         "ConnectionName",
+        "ConnectorName",
         "ConnectionType"
       ],
       "members":{
@@ -13580,14 +13927,14 @@
           "documentation":"<p>The name of an Apache Spark connector.</p>"
         },
         "ConnectionType":{
-          "shape":"EnclosedInStringProperty",
+          "shape":"CustomConnectorConnectionType",
           "documentation":"<p>The type of connection, such as marketplace.spark or custom.spark, designating a connection to an Apache Spark data store.</p>"
         },
         "AdditionalOptions":{
           "shape":"AdditionalOptions",
           "documentation":"<p>Additional connection options for the connector.</p>"
         },
-        "outputSchemas":{"shape":"GlueStudioSchemas"}
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies a target that uses an Apache Spark connector.</p>"
     },
@@ -13616,7 +13963,7 @@
           "shape":"SqlAliases",
           "documentation":"<p>A list of aliases. An alias allows you to specify what name to use in the SQL for a given input. For example, you have a datasource named \"MyDataSource\". If you specify <code>From</code> as MyDataSource, and <code>Alias</code> as SqlName, then in your SQL you can do:</p> <p> <code>select * from SqlName</code> </p> <p>and that gets data from MyDataSource.</p>"
         },
-        "outputSchemas":{"shape":"GlueStudioSchemas"}
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies a transform where you enter a SQL query using Spark SQL syntax to transform the data. The output is a single <code>DynamicFrame</code>.</p>"
     },
@@ -13668,7 +14015,7 @@
           "documentation":"<p>The data inputs identified by their node names.</p>"
         },
         "Paths":{
-          "shape":"EnclosedInStringProperties",
+          "shape":"GlueStudioPathList",
           "documentation":"<p>A JSON path to a variable in the data structure.</p>"
         }
       },
@@ -13948,7 +14295,8 @@
         "Name":{
           "shape":"NameString",
           "documentation":"<p>The name of the workflow to start.</p>"
-        }
+        },
+        "RunProperties":{"shape":"WorkflowRunProperties"}
       }
     },
     "StartWorkflowRunResponse":{
@@ -14064,6 +14412,7 @@
           "shape":"LocationString",
           "documentation":"<p>The physical location of the table. By default, this takes the form of the warehouse location, followed by the database location in the warehouse, followed by the table name.</p>"
         },
+        "AdditionalLocations":{"shape":"LocationStringList"},
         "InputFormat":{
           "shape":"FormatString",
           "documentation":"<p>The input format: <code>SequenceFileInputFormat</code> (binary), or <code>TextInputFormat</code>, or a custom format.</p>"
@@ -14236,7 +14585,8 @@
         "CatalogId":{
           "shape":"CatalogIdString",
           "documentation":"<p>The ID of the Data Catalog in which the table resides.</p>"
-        }
+        },
+        "VersionId":{"shape":"VersionString"}
       },
       "documentation":"<p>Represents a collection of related data organized in columns and rows.</p>"
     },
@@ -14605,6 +14955,12 @@
       "max":10,
       "min":1
     },
+    "TransactionIdString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\p{L}\\p{N}\\p{P}]*"
+    },
     "TransformEncryption":{
       "type":"structure",
       "members":{
@@ -14862,6 +15218,18 @@
       "max":1024,
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "UnfilteredPartition":{
+      "type":"structure",
+      "members":{
+        "Partition":{"shape":"Partition"},
+        "AuthorizedColumns":{"shape":"NameStringList"},
+        "IsRegisteredWithLakeFormation":{"shape":"Boolean"}
+      }
+    },
+    "UnfilteredPartitionList":{
+      "type":"list",
+      "member":{"shape":"UnfilteredPartition"}
     },
     "Union":{
       "type":"structure",
@@ -15308,15 +15676,23 @@
         "JobUpdate"
       ],
       "members":{
-        "JobName":{"shape":"NameString"},
-        "JobUpdate":{"shape":"JobUpdate"},
-        "CodeGenConfigurationNodes":{"shape":"CodeGenConfigurationNodes"}
+        "JobName":{
+          "shape":"NameString",
+          "documentation":"<p>The name of the job definition to update.</p>"
+        },
+        "JobUpdate":{
+          "shape":"JobUpdate",
+          "documentation":"<p>Specifies the values with which to update the job definition.</p>"
+        }
       }
     },
     "UpdateJobResponse":{
       "type":"structure",
       "members":{
-        "JobName":{"shape":"NameString"}
+        "JobName":{
+          "shape":"NameString",
+          "documentation":"<p>Returns the name of the updated job definition.</p>"
+        }
       }
     },
     "UpdateJsonClassifierRequest":{
@@ -15520,7 +15896,9 @@
         "SkipArchive":{
           "shape":"BooleanNullable",
           "documentation":"<p>By default, <code>UpdateTable</code> always creates an archived version of the table before updating it. However, if <code>skipArchive</code> is set to true, <code>UpdateTable</code> does not create the archived version.</p>"
-        }
+        },
+        "TransactionId":{"shape":"TransactionIdString"},
+        "VersionId":{"shape":"VersionString"}
       }
     },
     "UpdateTableResponse":{
