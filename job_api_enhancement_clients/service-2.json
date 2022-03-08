@@ -2949,7 +2949,10 @@
         "string",
         "timestamp",
         "tinyint",
-        "varchar"
+        "varchar",
+        "object",
+        "array",
+        "null"
       ]
     },
     "AthenaConnectorSource":{
@@ -4296,7 +4299,15 @@
         "Aggregate":{"shape":"Aggregate"},
         "DropDuplicates":{"shape":"DropDuplicates"},
         "GovernedCatalogTarget":{"shape":"GovernedCatalogTarget"},
-        "GovernedCatalogSource":{"shape":"GovernedCatalogSource"}
+        "GovernedCatalogSource":{"shape":"GovernedCatalogSource"},
+        "MicrosoftSQLServerCatalogSource":{"shape":"MicrosoftSQLServerCatalogSource"},
+        "MySQLCatalogSource":{"shape":"MySQLCatalogSource"},
+        "OracleSQLCatalogSource":{"shape":"OracleSQLCatalogSource"},
+        "PostgreSQLCatalogSource":{"shape":"PostgreSQLCatalogSource"},
+        "MicrosoftSQLServerCatalogTarget":{"shape":"MicrosoftSQLServerCatalogTarget"},
+        "MySQLCatalogTarget":{"shape":"MySQLCatalogTarget"},
+        "OracleSQLCatalogTarget":{"shape":"OracleSQLCatalogTarget"},
+        "PostgreSQLCatalogTarget":{"shape":"PostgreSQLCatalogTarget"}
       },
       "documentation":"<p> <code>CodeGenConfigurationNode</code> enumerates all valid Node types. One and only one of its member variables can be populated.</p>"
     },
@@ -7344,10 +7355,6 @@
           "shape":"OneInput",
           "documentation":"<p>The data inputs identified by their node names.</p>"
         },
-        "Paths":{
-          "shape":"LimitedStringList",
-          "documentation":"<p>A list of paths in Amazon S3 for the output.</p>"
-        },
         "NullCheckBoxList":{
           "shape":"NullCheckBoxList",
           "documentation":"<p>A structure that represents whether certain values are recognized as null values for removal.</p>"
@@ -7373,7 +7380,8 @@
         "ConnectionOptions":{
           "shape":"DDBELTConnectionOptions",
           "documentation":"<p>The options for an Amazon Dynamo DB ELT connection.</p>"
-        }
+        },
+        "OutputSchemas":{"shape":"GlueSchemas"}
       },
       "documentation":"<p>Specifies a connector to an Amazon DynamoDB ELT source.</p>"
     },
@@ -7633,7 +7641,7 @@
           "documentation":"<p>The data inputs identified by their node names.</p>"
         },
         "ImputedPath":{
-          "shape":"EnclosedInStringProperties",
+          "shape":"EnclosedInStringProperty",
           "documentation":"<p>A JSON path to a variable in the data structure for the dataset that is imputed.</p>"
         },
         "FilledPath":{
@@ -7736,7 +7744,7 @@
           "documentation":"<p>The type of filter value.</p>"
         },
         "Value":{
-          "shape":"EnclosedInStringProperty",
+          "shape":"EnclosedInStringProperties",
           "documentation":"<p>The value to be associated.</p>"
         }
       },
@@ -9823,17 +9831,33 @@
     "GlueSchema":{
       "type":"structure",
       "members":{
-        "Columns":{"shape":"ColumnList"}
+        "Columns":{"shape":"GlueStudioSchemaColumnList"}
       }
     },
     "GlueSchemas":{
       "type":"list",
-      "member":{"shape":"GlueSchema"}
+      "member":{"shape":"GlueSchema"},
+      "max":10000,
+      "min":0
     },
     "GlueStudioPathList":{
       "type":"list",
       "member":{"shape":"EnclosedInStringProperties"},
       "max":100,
+      "min":0
+    },
+    "GlueStudioSchemaColumn":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"ColumnNameString"},
+        "Type":{"shape":"ColumnTypeString"}
+      }
+    },
+    "GlueStudioSchemaColumnList":{
+      "type":"list",
+      "member":{"shape":"GlueStudioSchemaColumn"},
+      "max":10000,
       "min":0
     },
     "GlueTable":{
@@ -11714,6 +11738,34 @@
       "min":1,
       "pattern":"[a-zA-Z0-9+-=._./@]+"
     },
+    "MicrosoftSQLServerCatalogSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"}
+      }
+    },
+    "MicrosoftSQLServerCatalogTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"}
+      }
+    },
     "MillisecondsCount":{"type":"long"},
     "MongoDBTarget":{
       "type":"structure",
@@ -11736,6 +11788,34 @@
     "MongoDBTargetList":{
       "type":"list",
       "member":{"shape":"MongoDBTarget"}
+    },
+    "MySQLCatalogSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"}
+      }
+    },
+    "MySQLCatalogTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"}
+      }
     },
     "NameString":{
       "type":"string",
@@ -11806,7 +11886,7 @@
       "type":"string",
       "max":100,
       "min":0,
-      "pattern":"([A-Za-z0-9_-]|[^\\S\\r\\n])*"
+      "pattern":"([¡-¿:-@À-ÿ\\[-`\\!-/\\|A-Za-z0-9_-]|[^\\S\\r\\n])*"
     },
     "NodeType":{
       "type":"string",
@@ -11918,6 +11998,34 @@
       "documentation":"<p>The operation timed out.</p>",
       "exception":true
     },
+    "OracleSQLCatalogSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"}
+      }
+    },
+    "OracleSQLCatalogTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"}
+      }
+    },
     "OrchestrationIAMRoleArn":{
       "type":"string",
       "max":1024,
@@ -12021,7 +12129,8 @@
         "snappy",
         "lzo",
         "gzip",
-        "uncompressed"
+        "uncompressed",
+        "none"
       ]
     },
     "Partition":{
@@ -12272,6 +12381,34 @@
     "PositiveInt":{
       "type":"integer",
       "min":1
+    },
+    "PostgreSQLCatalogSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"}
+      }
+    },
+    "PostgreSQLCatalogTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"}
+      }
     },
     "Predecessor":{
       "type":"structure",
@@ -12566,8 +12703,8 @@
       "type":"string",
       "enum":[
         "quote",
-        "\\u00ab",
-        "'"
+        "quillemet",
+        "single_quote"
       ]
     },
     "RecordsCount":{
@@ -12829,7 +12966,7 @@
           "documentation":"<p>A JSON path to a variable in the data structure for the source data.</p>"
         },
         "TargetPath":{
-          "shape":"EnclosedInStringProperty",
+          "shape":"EnclosedInStringProperties",
           "documentation":"<p>A JSON path to a variable in the data structure for the target data.</p>"
         }
       },
@@ -14049,7 +14186,7 @@
       "type":"string",
       "max":51200,
       "min":0,
-      "pattern":"[A-Za-z0-9_\\-.,<>?:\\/!@#$%^&\"'\\\\*()+=;~`|\\[\\]{}\\s]*"
+      "pattern":"[A-Za-z0-9_\\-\\.,<>?:\\/!@#$%^&\"'\\\\*()+=;~`|\\[\\]{}\\s]*"
     },
     "StartBlueprintRunRequest":{
       "type":"structure",
