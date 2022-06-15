@@ -102,7 +102,6 @@ tx_id = glue_context.start_transaction(read_only=False)
 sink = glue_context.getSink(
     connection_type="s3",
     path=output_path,
-    enableUpdateCatalog=True,
     partitionKeys=partition_key_names,
     transactionId=tx_id
 )
