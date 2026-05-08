@@ -58,7 +58,7 @@ def generate_layout(user_params, system_params):
     # Creating script bucket
     the_script_bucket = f"aws-glue-scripts-{system_params['accountId']}-{system_params['region']}"
     try:
-        s3_client.head_bucket(Bucket=the_script_bucket)
+        s3_client.head_bucket(Bucket=the_script_bucket, ExpectedBucketOwner=system_params['accountId'])
         print("Script bucket already exists: ", the_script_bucket)
     except ClientError as ce:
         print(ce)
@@ -74,7 +74,7 @@ def generate_layout(user_params, system_params):
     the_temp_prefix = f"{workflow_name}/"
     the_temp_location = f"s3://{the_temp_bucket}/{the_temp_prefix}"
     try:
-        s3_client.head_bucket(Bucket=the_temp_bucket)
+        s3_client.head_bucket(Bucket=the_temp_bucket, ExpectedBucketOwner=system_params['accountId'])
         print("Temp bucket already exists: ", the_temp_bucket)
     except ClientError as ce:
         print(ce)
