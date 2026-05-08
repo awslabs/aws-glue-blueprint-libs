@@ -17,10 +17,10 @@ logger.addHandler(handler)
 logger.propagate = False
 
 
-def create_s3_bucket_if_needed(s3_client, bucket_name, region):
+def create_s3_bucket_if_needed(s3_client, bucket_name, region, account_id):
     location = {'LocationConstraint': region}
     try:
-        s3_client.head_bucket(Bucket=bucket_name)
+        s3_client.head_bucket(Bucket=bucket_name, ExpectedBucketOwner=account_id)
         logger.info(f"S3 Bucket already exists: {bucket_name}")
     except ClientError as ce1:
         if ce1.response['Error']['Code'] == "404": # bucket not found
@@ -68,11 +68,11 @@ def generate_layout(user_params, system_params):
 
     # Creating script bucket
     the_script_bucket = f"aws-glue-scripts-{system_params['accountId']}-{system_params['region']}"
-    create_s3_bucket_if_needed(s3_client, the_script_bucket, system_params['region'])
+    create_s3_bucket_if_needed(s3_client, the_script_bucket, system_params['region'], system_params['accountId'])
 
     # Creating temp bucket
     the_temp_bucket = f"aws-glue-temporary-{system_params['accountId']}-{system_params['region']}"
-    create_s3_bucket_if_needed(s3_client, the_temp_bucket, system_params['region'])
+    create_s3_bucket_if_needed(s3_client, the_temp_bucket, system_params['region'], system_params['accountId'])
     the_temp_prefix = f"{workflow_name}/"
     the_temp_location = f"s3://{the_temp_bucket}/{the_temp_prefix}"
 
