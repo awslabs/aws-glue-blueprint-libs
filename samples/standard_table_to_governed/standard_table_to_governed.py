@@ -73,7 +73,15 @@ table_to_create = {
 }
 
 table_to_create['StorageDescriptor']['Location'] = output_path
-table_to_create['StorageDescriptor']['Parameters']['lakeformation.aso.status'] = 'true'
+table_to_create['StorageDescriptor']['InputFormat'] = 'org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat'
+table_to_create['StorageDescriptor']['OutputFormat'] = 'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat'
+table_to_create['StorageDescriptor']['SerdeInfo']['SerializationLibrary'] = 'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe'
+table_to_create['StorageDescriptor']['SerdeInfo']['Parameters'] = {}
+table_to_create['StorageDescriptor']['SerdeInfo']['Parameters']['serialization.format'] = '1'
+table_to_create['Parameters'] = {}
+table_to_create['Parameters']['lakeformation.aso.status'] = 'true'
+table_to_create['Parameters']['classification'] = 'parquet'
+
 if 'Description' in res['Table']:
     table_to_create['Description'] = res['Table']['Description']
 
@@ -94,11 +102,10 @@ tx_id = glue_context.start_transaction(read_only=False)
 sink = glue_context.getSink(
     connection_type="s3",
     path=output_path,
-    enableUpdateCatalog=True,
     partitionKeys=partition_key_names,
     transactionId=tx_id
 )
-sink.setFormat("glueparquet")
+sink.setFormat("parquet", useGlueParquetWriter=True)
 sink.setCatalogInfo(
     catalogDatabase=output_database,
     catalogTableName=output_table
