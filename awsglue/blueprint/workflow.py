@@ -17,12 +17,19 @@ class Entities(object):
             'Name': "{}_starting_trigger".format(workflow_name),
             'Actions': []
         }
-        if starting_trigger_schedule:
+
+        if starting_trigger_schedule == "EVENT":
+            starting_trigger['Type'] = "EVENT"
+            starting_trigger['EventBatchingCondition'] = {'BatchSize' : 1 }
+            
+        elif starting_trigger_schedule == "ON_DEMAND" or not starting_trigger_schedule:
+            starting_trigger['Type'] = "ON_DEMAND"
+        
+        elif starting_trigger_schedule:
             starting_trigger['Type'] = "SCHEDULED"
             starting_trigger['Schedule'] = starting_trigger_schedule
             starting_trigger['StartOnCreation'] = True
-        else:
-            starting_trigger['Type'] = "ON_DEMAND"
+        
 
         for crawler in crawlers:
             if 'DependsOn' in crawler:
